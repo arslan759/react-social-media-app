@@ -1,19 +1,45 @@
-import { Box, Stack } from "@mui/material";
-import Feed from "./components/feed";
-import Leftbar from "./components/leftbar";
-import Navbar from "./components/navbar";
-import Rightbar from "./components/rightbar";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Auth from "./components/auth";
+import Login from "./components/login";
+import Signup from "./components/signup";
+import Friendspage from "./pages/friendspage";
+import Homepage from "./pages/homepage";
+import Settingspage from "./pages/settingspage";
 
 function App() {
   return (
-    <Box>
-      <Navbar />
-      <Stack direction="row" spacing={2} justifyContent="space-between">
-        <Leftbar />
-        <Feed />
-        <Rightbar />
-      </Stack>
-    </Box>
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route
+            path="/home"
+            element={
+              <Auth>
+                <Homepage />
+              </Auth>
+            }
+          />
+          <Route
+            path="/settings"
+            element={
+              <Auth>
+                <Settingspage />
+              </Auth>
+            }
+          />
+          <Route
+            path="/friends"
+            element={
+              <Auth>
+                <Friendspage />
+              </Auth>
+            }
+          />
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 }
 
