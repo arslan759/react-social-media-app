@@ -1,0 +1,56 @@
+{
+  "users": [
+    {
+      "firstname": "Arslan",
+      "lastname": "Obaid",
+      "username": "arslan759",
+      "email": "arslan759",
+      "dob": "2022-12-27",
+      "gender": "Male",
+      "password": "arslan759",
+      "totalLikes": 0,
+      "totalComments": 0,
+      "avatar_url": "",
+      "background": "",
+      "bio": "",
+      "id": 1
+    },
+    {
+      "firstname": "asad",
+      "lastname": "leghari",
+      "username": "asadmirchi759",
+      "email": "asad@mirach.com",
+      "dob": "2022-12-28",
+      "gender": "Female",
+      "password": "asad759",
+      "totalLikes": 0,
+      "totalComments": 0,
+      "avatar_url": "",
+      "background": "",
+      "bio": "",
+      "id": 2
+    }
+  ],
+  "posts": [
+    {
+      "username": "arslan759",
+      "name": "Arslan Obaid",
+      "caption": "a",
+      "photo": "https://wallpaperaccess.com/full/52447.jpg",
+      "likes": 0,
+      "comments": 0,
+      "shares": 0,
+      "id": 1
+    },
+    {
+      "username": "arslan759",
+      "name": "Arslan Obaid",
+      "caption": "s",
+      "photo": "https://wallpaperaccess.com/full/52447.jpg",
+      "likes": 0,
+      "comments": 0,
+      "shares": 0,
+      "id": 2
+    }
+  ]
+}
