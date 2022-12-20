@@ -20,7 +20,7 @@ const CustomListItem = ({ link, icon, text }) => {
   }
   return (
     <ListItem disablePadding>
-      <ListItemButton component="a" onClick={handleclick}>
+      <ListItemButton onClick={handleclick}>
         <ListItemIcon sx={{ width: { md: "fit-content" } }}>
           {icon}
         </ListItemIcon>
