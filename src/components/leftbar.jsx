@@ -43,7 +43,7 @@ const Leftbar = ({ display }) => {
             />
             <CustomListItem link="/" icon={<Logout />} text="Logout" />
             <ListItem disablePadding>
-              <ListItemButton component="a" href="#">
+              <ListItemButton>
                 <ListItemIcon sx={{ display: { sm: "none", md: "block" } }}>
                   <ModeNight />
                 </ListItemIcon>

@@ -1,8 +1,25 @@
+import {
+  Box,
+  Button,
+  Checkbox,
+  Container,
+  FormControl,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
+  Paper,
+  Typography,
+} from "@mui/material";
+import {
+  LockOpen,
+  LoginOutlined,
+  Visibility,
+  VisibilityOff,
+} from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import Button from "./button";
-import Gender from "./gender";
-import InputField from "./inputfield";
+import bg2 from "../assets/bg2.jpg";
 
 const Signup = () => {
   const [users, setUsers] = useState([]);
@@ -10,12 +27,11 @@ const Signup = () => {
   const [lastname, setLastname] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
-  const [dob, setDob] = useState("");
-  const [gender, setGender] = useState("");
   const [password, setPassword] = useState("");
   const [isInValid, setIsInValid] = useState(false);
-  const [isAlready, setIsAlready] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const createUser = (e) => {
     e.preventDefault();
@@ -25,28 +41,23 @@ const Signup = () => {
     let presentUser = users.filter((persons) => persons.username == username);
     let presentUsermail = users.filter((persons) => persons.email == email);
 
-    if (presentUser >= 1) setIsAlready(true);
-
     if (
       firstname != "" &&
       lastname != "" &&
       username != "" &&
       email != "" &&
-      dob != "" &&
-      gender != "" &&
       password != "" &&
       presentUser.length < 1 &&
       presentUsermail.length < 1
     ) {
       setIsInValid(false);
-      setIsAlready(false);
       const user = {
         firstname: firstname,
         lastname: lastname,
         username: username,
         email: email,
-        dob: dob,
-        gender: gender,
+        dob: "",
+        gender: "",
         password: password,
         totalLikes: 0,
         totalComments: 0,
@@ -69,67 +80,112 @@ const Signup = () => {
   };
 
   return (
-    <>
-      <div className="main row container-fluid d-flex justify-content-center align-items-center ">
-        <div className="col-4 my-auto">
-          <div className="form-container mx-auto">
-            <h1 className="text-center">Signup</h1>
-            <form className=" w-100">
-              <div className="d-flex justify-content-between">
-                <InputField
+    <Box
+      sx={{
+        height: "100vh",
+        width: "100%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundImage: `url(${bg2})`,
+      }}
+    >
+      <Container maxWidth="xs">
+        <Paper elevation={3} sx={{ padding: 3, borderRadius: 3 }}>
+          <Box display={"flex"} flexDirection="column">
+            <Typography component="h1" sx={{ textAlign: "center" }}>
+              <LockOpen color="primary" sx={{ fontSize: "50px" }} />
+            </Typography>
+            <Typography
+              component="h1"
+              textAlign={"center"}
+              sx={{ fontSize: "50px" }}
+            >
+              SIGNUP
+            </Typography>
+            <Box display={"flex"}>
+              <FormControl sx={{ m: 1 }} variant="outlined">
+                <InputLabel htmlFor="fname">First Name</InputLabel>
+                <OutlinedInput
+                  id="fname"
+                  type="text"
                   label="First Name"
-                  type="text"
-                  onchange={(e) => setFirstname(e.target.value)}
+                  onChange={(e) => setFirstname(e.target.value)}
                 />
-                <InputField
+              </FormControl>
+              <FormControl sx={{ m: 1 }} variant="outlined">
+                <InputLabel htmlFor="lname">Last Name</InputLabel>
+                <OutlinedInput
+                  id="lname"
+                  type="text"
                   label="Last Name"
-                  type="text"
-                  onchange={(e) => setLastname(e.target.value)}
+                  onChange={(e) => setLastname(e.target.value)}
                 />
-              </div>
-              <div>
-                <InputField
-                  label="Username"
-                  type="text"
-                  onchange={(e) => setUsername(e.target.value)}
-                />
-
-                <InputField
-                  label="Date of Birth"
-                  type="date"
-                  onchange={(e) => setDob(e.target.value)}
-                />
-              </div>
-              <div>
-                <InputField
-                  label="Email"
-                  type="email"
-                  onchange={(e) => setEmail(e.target.value)}
-                />
-                <Gender
-                  gender={gender}
-                  onchange={(e) => setGender(e.target.value)}
-                />
-              </div>
-              <InputField
-                label="Password"
-                type="password"
-                onchange={(e) => setPassword(e.target.value)}
+              </FormControl>
+            </Box>
+            <FormControl sx={{ m: 1 }} variant="outlined">
+              <InputLabel htmlFor="username">Username</InputLabel>
+              <OutlinedInput
+                id="username"
+                type="text"
+                label="Username"
+                onChange={(e) => setUsername(e.target.value)}
               />
-              {isInValid && <div className="text-danger">Invalid Info</div>}
-              {isAlready && (
-                <div className="text-danger">User Already Exists</div>
-              )}
-
-              <Button text="Sign Up" onclick={createUser} />
-              <div className="d-flex justify-content-end">
-                <Link to="/">Already have an Account? Login</Link>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </>
+            </FormControl>
+            <FormControl sx={{ m: 1 }} variant="outlined">
+              <InputLabel htmlFor="email">Email</InputLabel>
+              <OutlinedInput
+                id="email"
+                type="email"
+                label="Email"
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </FormControl>
+            <FormControl sx={{ m: 1 }} variant="outlined">
+              <InputLabel htmlFor="outlined-adornment-password">
+                Password
+              </InputLabel>
+              <OutlinedInput
+                id="outlined-adornment-password"
+                type={showPassword ? "text" : "password"}
+                onChange={(e) => setPassword(e.target.value)}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+                label="Password"
+              />
+            </FormControl>
+            {isInValid && (
+              <FormControl sx={{ m: 1 }} variant="outlined">
+                <Typography variant="span" color={"red"}>
+                  Invalid Info or User Already Exists!
+                </Typography>
+              </FormControl>
+            )}
+            <FormControl sx={{ m: 1 }} variant="outlined">
+              <Button onClick={createUser} variant="outlined">
+                SIGNUP
+              </Button>
+            </FormControl>
+            <FormControl sx={{ m: 1 }} variant="outlined">
+              <Link to="/">
+                <Typography sx={{ display: "flex", justifyContent: "end" }}>
+                  Already a Member? Login here!
+                </Typography>
+              </Link>
+            </FormControl>
+          </Box>
+        </Paper>
+      </Container>
+    </Box>
   );
 };
 

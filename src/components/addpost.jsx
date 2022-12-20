@@ -23,23 +23,20 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useRef, useState } from "react";
+import moment from "moment/moment";
+import React, { useEffect, useState } from "react";
 
 const AddPost = () => {
   const [open, setOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
-  const [posts, setPosts] = useState([]);
   const [caption, setCaption] = useState("");
+  const [photoURL, setPhotoURL] = useState("");
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   useEffect(() => {
     let temp = localStorage.getItem("user");
     setCurrentUser(JSON.parse(temp));
-
-    fetch("http://localhost:3001/posts")
-      .then((response) => response.json())
-      .then((json) => setPosts(json));
   }, []);
 
   const handleSubmit = (e) => {
@@ -49,7 +46,9 @@ const AddPost = () => {
         username: currentUser.username,
         name: currentUser.firstname + " " + currentUser.lastname,
         caption: caption,
-        photo: "https://wallpaperaccess.com/full/52447.jpg",
+        date: moment().format("MMMM Do YYYY, h:mm:ss a"),
+        avatar: currentUser.avatar,
+        photo: photoURL,
         likes: 0,
         comments: 0,
         shares: 0,
@@ -64,17 +63,9 @@ const AddPost = () => {
       });
 
       alert("Post Created");
+      window.location.reload(false);
     }
   };
-
-  // const StyledBox = styled(Box)({
-  //   background: "white",
-  //   height: "auto",
-  //   width: "100%",
-  //   padding: "20px",
-  //   marginBottom: "20px",
-  //   borderRadius: 15,
-  // });
 
   const StyledModal = styled(Modal)({
     display: "flex",
@@ -105,19 +96,15 @@ const AddPost = () => {
         borderRadius: "15px",
       }}
     >
-      {/* <StyledBox> */}
       <form action="">
         <Box display="flex" alignItems="center" gap={2}>
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+          <Avatar src={currentUser.avatar} />
 
           <TextField
+            onClick={handleOpen}
             placeholder="What's on your mind?"
             variant="outlined"
             size="small"
-            value={caption}
-            onChange={(e) => {
-              setCaption(e.target.value);
-            }}
             sx={{
               background: "whitesmoke",
               width: "100%",
@@ -186,8 +173,78 @@ const AddPost = () => {
             </Button>
           </Box>
         </Stack>
+        <Modal
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+          open={open}
+          onClose={(e) => setOpen(false)}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box
+            width={400}
+            height={"auto"}
+            bgcolor={"background.default"}
+            color={"text.primary"}
+            p={3}
+            borderRadius={5}
+          >
+            <Typography variant="h6" color="gray" textAlign="center">
+              Create post
+            </Typography>
+            <UserBox>
+              <Avatar src={currentUser.avatar} sx={{ width: 30, height: 30 }} />
+              <Typography fontWeight={500} variant="span">
+                {currentUser.firstname + " " + currentUser.lastname}
+              </Typography>
+            </UserBox>
+            <TextField
+              sx={{ width: "100%", marginBottom: "5px" }}
+              id="standard-multiline-static"
+              multiline
+              rows={3}
+              placeholder="What's on your mind?"
+              variant="standard"
+              value={caption}
+              onChange={(e) => {
+                setCaption(e.target.value);
+              }}
+            />
+            <TextField
+              placeholder="Please Enter Photo URL"
+              variant="outlined"
+              onChange={(e) => {
+                setPhotoURL(e.target.value);
+              }}
+              size="small"
+              sx={{
+                background: "whitesmoke",
+                width: "100%",
+              }}
+            />
+
+            <Stack direction="row" gap={1} mt={2} mb={3}>
+              <EmojiEmotions color="primary" />
+              <Image color="secondary" />
+              <VideoCameraBack color="success" />
+              <PersonAdd color="error" />
+            </Stack>
+            <ButtonGroup
+              fullWidth
+              variant="contained"
+              aria-label="outlined primary button group"
+            >
+              <Button onClick={handleSubmit}>Post</Button>
+              <Button onClick={handleClose} sx={{ width: "100px" }}>
+                <Close />
+              </Button>
+            </ButtonGroup>
+          </Box>
+        </Modal>
       </form>
-      {/* </StyledBox> */}
     </Box>
   );
 };
