@@ -12,15 +12,28 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [userMenu, setUserMenu] = useState(false);
   const [localUser, setLocalUser] = useState();
+  const navigate = useNavigate();
 
   useEffect(() => {
     let temp = localStorage.getItem("user");
     setLocalUser(JSON.parse(temp));
   }, []);
+
+  function handleclick() {
+    localStorage.removeItem("user");
+    navigate("/");
+  }
+  function gotoProflie() {
+    navigate("/profile");
+  }
+  function gotoSettings() {
+    navigate("/settings");
+  }
 
   const StyledToolbar = styled(Toolbar)({
     display: "flex",
@@ -92,6 +105,11 @@ const Navbar = () => {
               alt="Arslan Obaid"
               src={localUser?.avatar}
               onClick={(e) => setUserMenu(true)}
+              sx={{
+                "&:hover": {
+                  cursor: "pointer",
+                },
+              }}
             />
           </UserBox>
         </Stack>
@@ -111,9 +129,9 @@ const Navbar = () => {
           horizontal: "left",
         }}
       >
-        <MenuItem>Profile</MenuItem>
-        <MenuItem>Settings</MenuItem>
-        <MenuItem>Logout</MenuItem>
+        <MenuItem onClick={gotoProflie}>Profile</MenuItem>
+        <MenuItem onClick={gotoSettings}>Settings</MenuItem>
+        <MenuItem onClick={handleclick}>Logout</MenuItem>
       </Menu>
     </AppBar>
   );

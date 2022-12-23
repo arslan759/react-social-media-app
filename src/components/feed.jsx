@@ -26,6 +26,7 @@ const Feed = () => {
       ) : (
         posts.map((item) => (
           <PostCard
+            avatar={item.avatar}
             name={item.name}
             photo={item.photo}
             caption={item.caption}

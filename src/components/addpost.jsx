@@ -35,22 +35,25 @@ const AddPost = () => {
   const handleClose = () => setOpen(false);
 
   useEffect(() => {
-    let temp = localStorage.getItem("user");
-    setCurrentUser(JSON.parse(temp));
+    let temp = JSON.parse(localStorage.getItem("user"));
+
+    fetch(`http://localhost:3001/users/${temp.id}`)
+      .then((response) => response.json())
+      .then((json) => setCurrentUser(json));
   }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (caption) {
+    if (caption || photoURL) {
       const post = {
         username: currentUser.username,
         name: currentUser.firstname + " " + currentUser.lastname,
         caption: caption,
         date: moment().format("MMMM Do YYYY, h:mm:ss a"),
-        avatar: currentUser.avatar,
+        avatar: currentUser.avatar_url,
         photo: photoURL,
         likes: 0,
-        comments: 0,
+        comments: [],
         shares: 0,
       };
 
@@ -98,7 +101,7 @@ const AddPost = () => {
     >
       <form action="">
         <Box display="flex" alignItems="center" gap={2}>
-          <Avatar src={currentUser.avatar} />
+          <Avatar src={currentUser.avatar_url} />
 
           <TextField
             onClick={handleOpen}
