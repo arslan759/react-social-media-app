@@ -7,6 +7,7 @@ import Friendspage from "./pages/friendspage";
 import Homepage from "./pages/homepage";
 import AdminPage from "./pages/adminpage";
 import Settingspage from "./pages/settingspage";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (

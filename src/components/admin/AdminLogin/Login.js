@@ -52,7 +52,7 @@ else{
       <div className="mt-5 w-50 mx-auto bg-white p-5 rounded-3">
         <div className="container justify-content-center mt-5 ms-5 ">
           <h1 className="mb-4 display-7 ms-5 text-sm-center text-lg-start text-md-start text-center">
-            Login Form
+            Admin Login
           </h1>
           <form className="ms-5">
             <div className="row">

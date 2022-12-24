@@ -1,6 +1,5 @@
 import Dashboard from "../components/admin/AdminDashboard/Dashboard";
 import AdminNavbar from "../components/admin/AdminDashboard/Navbar";
-import PieChart from "../components/admin/AdminDashboard/PieChart";
 import AdminSidebar from "../components/admin/AdminDashboard/Sidebar";
 
 
@@ -11,7 +10,6 @@ const AdminPage = () => {
         <AdminNavbar/>
         <AdminSidebar/>
         <Dashboard/>
-        <PieChart/>
         </>
     );
   };
